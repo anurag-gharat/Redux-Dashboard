@@ -95,9 +95,9 @@ function SideBar(props) {
 }
 const mapStateToProps=(state)=>{
     return {
-        newMessages:state.newMessages,
-        newNotifications:state.newNotifications,
-        isOnline:state.isOnline
+        newMessages:state.user.newMessages,
+        newNotifications:state.user.newNotifications,
+        isOnline:state.user.isOnline
     }
 }
 const mapDispatchToProps=dispatch=>{

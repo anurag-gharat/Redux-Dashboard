@@ -222,9 +222,9 @@ function PrimarySearchAppBar(props) {
 
 const matchStateToProps=(state)=>{
   return {
-    newMessages:state.newMessages,
-    newNotifications:state.newNotifications,
-    isOnline:state.isOnline  }
+    newMessages:state.user.newMessages,
+    newNotifications:state.user.newNotifications,
+    isOnline:state.user.isOnline  }
 }
 
 export default connect(matchStateToProps)(PrimarySearchAppBar)

@@ -1,35 +1,31 @@
 const initialState={
-    isOnline:true,
-    newMessages:10,
-    newNotifications:50
+    loading:false,
+    posts:[],
+    error:''
 }
+const postsReducer=(state=initialState,action)=>{
 
-const userReducer=(state=initialState,action)=>{
     switch(action.type){
-        case 'STATUS':
-            return{
-                ...state,
-                isOnline:!state.isOnline
-            }
-        case 'READ_MESSSAGE':
+        case "FETCH_REQUEST":
             return {
-                ...state,
-                newMessages:state.newMessages-1
+                loading:true,
+                ...state
             }
-        case 'ADD_MESSAGE':
+        case "FETCH_REQUEST_SUCCESS":
             return {
-                ...state,
-                newMessages:state.newMessages+1
+                loading:false,
+                posts:action.payload,
+                error:"",
             }
-        case 'CLEAR_NOTIFICATIONS':
+        case "FETCH_REQUEST_FAIL":
             return {
-                ...state,
-                newNotifications:0
+                loading:false,
+                users:[],
+                error:action.payload
             }
         default :
-            return state
-        }
+        return state
+    }
 
 }
-
-export default userReducer
+export default postsReducer
