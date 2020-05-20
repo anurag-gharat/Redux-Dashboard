@@ -1,5 +1,5 @@
 import React from 'react';
-import {readMessage,addMessage} from '../Redux/User/userActions'
+import {readMessage,addMessage,clearNotifications,status} from '../Redux/User/userActions'
 import {connect} from 'react-redux'
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -35,6 +35,7 @@ function SideBar(props) {
 
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
+    props.status()
   };
 
   return (
@@ -42,7 +43,7 @@ function SideBar(props) {
         <Grid  container>
             <Box> <FormControlLabel
           control={<Switch checked={state.gilad} onChange={handleChange} name="gilad" />}
-          label="Online"
+          label={props.isOnline?"Online":"Offline"}
         /> </Box>
         </Grid>
       <Grid container spacing={4} justify="center"   direction="row"
@@ -76,13 +77,13 @@ function SideBar(props) {
             <Box>Total Notifications</Box>
             <Box color="text.primary">
           <Typography variant="h2" component="h4" gutterBottom>
-            17
+            {props.newNotifications}
       </Typography></Box>
         </Paper>
         </Box>
         </Grid>        
         <Grid item xs={14} justify="end">
-        <Button variant="outlined" justify="center" color="primary">
+        <Button variant="outlined" justify="center" color="primary" onClick={props.clearNotifications}>
             Clear all Notifications
         </Button>
         </Grid>
@@ -94,13 +95,17 @@ function SideBar(props) {
 }
 const mapStateToProps=(state)=>{
     return {
-        newMessages:state.newMessages
+        newMessages:state.newMessages,
+        newNotifications:state.newNotifications,
+        isOnline:state.isOnline
     }
 }
 const mapDispatchToProps=dispatch=>{
     return {
         readMessage:()=>dispatch(readMessage()),
-        addMessage:()=>dispatch(addMessage())
+        addMessage:()=>dispatch(addMessage()),
+        clearNotifications:()=>dispatch(clearNotifications()),
+        status:()=>dispatch(status())
 
     }
 }
