@@ -54,7 +54,7 @@ function SideBar(props) {
         <Box>
         <Paper className={classes.paper}>
             <Box>Total Messages</Box>
-            <Box>
+            <Box color="text.primary">
           <Typography variant="h2" component="h4" gutterBottom>
             {props.newMessages}
       </Typography></Box>

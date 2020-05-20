@@ -2,6 +2,7 @@ import React from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import {connect} from 'react-redux'
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
@@ -78,8 +79,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
-export default function PrimarySearchAppBar() {
+function PrimarySearchAppBar(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -181,12 +181,12 @@ export default function PrimarySearchAppBar() {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
+              <Badge badgeContent={props.newMessages} color="secondary">
                 <MailIcon />
               </Badge>
             </IconButton>
             <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
+              <Badge badgeContent={props.newNotifications} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
@@ -219,3 +219,12 @@ export default function PrimarySearchAppBar() {
     </div>
   );
 }
+
+const matchStateToProps=(state)=>{
+  return {
+    newMessages:state.newMessages,
+    newNotifications:state.newNotifications,
+    isOnline:state.isOnline  }
+}
+
+export default connect(matchStateToProps)(PrimarySearchAppBar)
