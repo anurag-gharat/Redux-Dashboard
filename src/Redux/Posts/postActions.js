@@ -24,14 +24,14 @@ export const errorOccured=(error)=>{
 export const fetchData=()=>{
     return dispatch=> {
         dispatch(fetchRequest)
-        axios.get("https://jsonplaceholder.typicode.com/photos")
+        axios.get("https://jsonplaceholder.typicode.com/posts")
                 .then(response=>{
-                    console.log(response)
-                    dataRecieved(response.data)
+                    const all=response.data
+                    dispatch(dataRecieved(all))
                 })
                 .catch(error=>{
-                    console.log(error)
-                    errorOccured(error.message)
+                    const err=error.message
+                    dispatch(errorOccured(err))
                 })
     }
 }
