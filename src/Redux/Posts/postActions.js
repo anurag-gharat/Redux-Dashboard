@@ -21,17 +21,38 @@ export const errorOccured=(error)=>{
     }
 }
 
-export const fetchData=()=>{
-    return dispatch=> {
-        dispatch(fetchRequest)
-        axios.get("https://jsonplaceholder.typicode.com/posts")
-                .then(response=>{
-                    const all=response.data
-                    dispatch(dataRecieved(all))
-                })
-                .catch(error=>{
-                    const err=error.message
-                    dispatch(errorOccured(err))
-                })
+export const fetchData=()=> dispatch=> {
+
+    dispatch(fetchRequest)
+    axios.get("https://jsonplaceholder.typicode.com/posts")
+            .then(response=>{
+                const all=response.data
+                dispatch(dataRecieved(all))
+            })
+            .catch(error=>{
+                const err=error.message
+                dispatch(errorOccured(err))
+            })
+
+}
+    
+export const addPost=(post)=>(dispatch)=>{
+
+    try {
+         axios.post('https://jsonplaceholder.typicode.com/posts', {
+            method: 'POST',
+            headers: {
+              'content-type': 'application/json'
+            },
+            body: JSON.stringify(post)
+          })
+          .then(res=>{res.json()})
+          .catch(err=>console.log(err))
+        } catch (error) {   
+            console.log(error)
+        
     }
+
+
+
 }
