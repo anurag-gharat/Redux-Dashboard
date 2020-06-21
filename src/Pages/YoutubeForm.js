@@ -1,5 +1,5 @@
 import React from 'react'
-import {Formik,Form,Field,ErrorMessage} from 'formik'
+import {Formik,Form,Field,ErrorMessage,FieldArray} from 'formik'
 import InputError from '../Components/InputError'
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -36,7 +36,8 @@ const initialValues={
     social:{
         facebook:'',
         instagram:''
-    }
+    },
+    tags:['']
 }
 
 const validationSchema=Yup.object({
@@ -223,6 +224,33 @@ export default function YoutubeForm() {
                             )
                         }}
                     </Field>
+                </div>
+                <div>
+                        <h4>Add tags</h4>
+                        <FieldArray name="tags">
+                            {
+                                fieldArrayProps=>{
+                                    console.log(fieldArrayProps)
+                                    const {push,remove,form}=fieldArrayProps
+                                    const {tags} = form.values
+                                    return(
+                                        <div>
+                                        {
+                                            tags.map((item,index)=>(
+                                                <div key={index}>
+                                                    <Field name={`item[${index}]`}>
+                                                    </Field>
+                                                    <Button onClick={()=>push('')}>+</Button>
+                                                         <Button  onClick={(index)=>remove(index)}>-</Button>
+                                                </div>
+                                            ))
+                                        }
+                                        </div>
+
+                                    )
+                                }
+                            }
+                        </FieldArray>
                 </div>
                 
                 <Button type="submit"  variant="contained" color="secondary" fullWidth={true} >Submit</Button>   
