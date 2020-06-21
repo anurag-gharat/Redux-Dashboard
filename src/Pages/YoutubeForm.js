@@ -122,7 +122,7 @@ export default function YoutubeForm() {
                 <Button type="submit"  variant="contained" color="secondary" fullWidth={true} >Submit</Button>   
                 </form> */}
 
-<Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+<Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnBlur={false} validateOnChange={false}>
     
             <Form className={classes.root} noValidate autoComplete="off">
                 <div>
