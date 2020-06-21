@@ -1,5 +1,6 @@
 import React from 'react'
-import {Formik,Form,Field} from 'formik'
+import {Formik,Form,Field,ErrorMessage} from 'formik'
+import InputError from '../Components/InputError'
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
@@ -30,14 +31,24 @@ const useStyles = makeStyles((theme) => ({
 const initialValues={
     name:'',
     email:'',
-    channel:''
+    channel:'',
+    address:'',
+    social:{
+        facebook:'',
+        instagram:''
+    }
 }
 
 const validationSchema=Yup.object({
     name:Yup.string().required('Required'),
     email:Yup.string().email("Please provide a proper format").required('Required'),
-    channel:Yup.string().required('Required')
+    channel:Yup.string().required('Required'),
+    address:Yup.string().required('Required')
 })
+
+const onSubmit=(values)=>{
+    console.log("Submitted values",values)
+}
 
 export default function YoutubeForm() {
     const classes = useStyles();
@@ -118,36 +129,102 @@ export default function YoutubeForm() {
                     id="name"
                     type="text" 
                     name="name" 
-
+                    placeholder="Name"
                     />
-                    {formik.touched.name && formik.errors.name ? (
-                     <Alert severity="error">{formik.errors.name}</Alert>
+                    <ErrorMessage name='name' />
 
-                    ):(null)}
                 </div>
                 <div>
                 <Field 
                     type="email"
                     id="email" 
                     name="email"
-
-                     />
-                     {formik.touched.email && formik.errors.email ? (
-                     <Alert severity="error">{formik.errors.email}</Alert>
-
-                    ):(null)}
+                placeholder="email"
+/>
+                    <ErrorMessage name='email' component={InputError} />
                 </div>
                 <div>
                 <Field 
                     type="text" 
                     id="channel" 
                     name="channel"
+                    placeholder="Youtube Channel Name"
                  />
-                    {formik.touched.channel && formik.errors.channel ? (
-                     <Alert severity="error">{formik.errors.channel}</Alert>
-                    ):(null)}
+                <ErrorMessage name='channel' >
+                    {(mssg)=>(
+                     <Alert severity="error">{mssg}</Alert>
+                    )}
+                </ErrorMessage>
                 
                 </div>
+                <div>
+                    <Field name="address">
+                        {(props)=>{
+                            console.log(props)
+                            const {field,form,meta}=props
+                            return(
+                                <div>
+                                <TextField 
+                                type="text" 
+                                id="address" 
+                                label="address" 
+                                variant="outlined"
+                                {...field}
+                                />
+                                {meta.touched && meta.error ? (
+                                <Alert severity="error">{meta.error}</Alert>
+                                ):(null)}
+                                </div>
+                            )
+                        }}
+                    </Field>
+                </div>
+                <div>
+                    <Field name="social.facebook">
+                        {(props)=>{
+                            console.log(props)
+                            const {field,form,meta}=props
+                            return(
+                                <div>
+                                <TextField 
+                                type="text" 
+                                id="facebook" 
+                                label="facebook profile" 
+                                variant="outlined"
+                                {...field}
+                                />
+                                {meta.touched && meta.error ? (
+                                <Alert severity="error">{meta.error}</Alert>
+                                ):(null)}
+                                </div>
+                            )
+                        }}
+                    </Field>
+                </div>
+
+                <div>
+                    <Field name="social.instagram">
+                        {(props)=>{
+                            console.log(props)
+                            const {field,form,meta}=props
+                            return(
+                                <div>
+                                <TextField 
+                                type="text" 
+                                id="instagram" 
+                                label="instagram profile" 
+                                variant="outlined"
+                                {...field}
+                                />
+                                {meta.touched && meta.error ? (
+                                <Alert severity="error">{meta.error}</Alert>
+                                ):(null)}
+                                </div>
+                            )
+                        }}
+                    </Field>
+                </div>
+                
                 <Button type="submit"  variant="contained" color="secondary" fullWidth={true} >Submit</Button>   
                 </Form>
 
